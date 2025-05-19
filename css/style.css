@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+main {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#enemy-field,
+#your-field {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+.enemy-cards,
+.your-cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+#enemy-num,
+#your-num {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    max-width: 200px;
+}
+#your-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh
+}
+#game-start-reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+.card img {
+    max-height: 280px;
+    width: 200px;
+    margin: 0 10px;
+}
+.btn {
+    padding: 15px 50px;
+    margin: 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    transition: transform 0.3s ease, bcg-color 0.3s ease;
+}
+.btn:hover {
+   transform:scale(1.05);
+   background-color: red;
+}
+.reset {
+    display: none
+}
+.reset:hover {
+    transform:scale(1.05);
+    background-color: green;
+}
+.num-counter {
+    font-size: 50px;
+    padding: 20px 80px;
+    background-color: green;
+    color: white;
+    margin-left: 50px;
+}
+.name {
+    color: white;
+    font-size: 20px;
+}
+#winner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}

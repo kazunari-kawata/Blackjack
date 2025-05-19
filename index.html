@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Blackjack</title>
+</head>
+<body>
+    <main>
+        <section id="enemy-field">
+            <div class="enemy-cards"></div>
+                <div id="enemy-card1" class="card"><img src="./materials/card_back.jpg" alt=""></div>
+                <div id="enemy-card2" class="card"><img src="./materials/card_back.jpg" alt=""></div>
+                <div id="enemy-card3" class="card"></div>
+                <div id="enemy-card4" class="card"></div>
+                <div id="enemy-card5" class="card"></div>
+                <div id="enemy-card6" class="card"></div>
+                <div id="enemy-num" class="num-counter">00</div>
+            </div>
+        </section>
+        <section>
+            <div id="winner">
+                <p></p>
+            </div>
+        </section>
+        <section id="your-field">
+            <div class="your-cards">
+                <div id="your-card1" class="card"><img src="./materials/card_back.jpg" alt=""></div>
+                <div id="your-card2" class="card"><img src="./materials/card_back.jpg" alt=""></div>
+                <div id="your-card3" class="card"></div>
+                <div id="your-card4" class="card"></div>
+                <div id="your-card5" class="card"></div>
+                <div id="your-card6" class="card"></div>
+                <div id="your-num" class="num-counter">00</div>
+            </div>
+        </section>
+        <section id="your-options">
+            <button id="hit-button" class="btn">Hit</button>
+            <button id="stay-button" class="btn">Stay</button>
+        </section>
+        <section id="game-start-reset">
+            <button id="start-button" class="btn">Start</button>
+            <button id="reset-button" class="btn reset">Reset</button>
+        </section>
+    </main>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+</html>
