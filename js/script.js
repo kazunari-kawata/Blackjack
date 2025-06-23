@@ -193,7 +193,6 @@ $("#your1-num").css("display", "none");
 $("#start-button").on("click", function () {
     // ヒットボタン⇨有効化、スタンドボタン⇨⇨有効化、スタートボタン⇨無効化
     $("#hit-button").prop("disabled", false);
-<<<<<<< HEAD
     $("#stand-button").prop("disabled", false);
     $("#surrender-button").prop("disabled", false);
     $("#doubleDown-button").prop("disabled", false);
@@ -201,10 +200,6 @@ $("#start-button").on("click", function () {
 
     // スタートボタン無効化
     $("#start-button").css("display", "none");
-=======
-    $("#stay-button").prop("disabled", false);
-    $("#start-button").prop("disabled", true);
->>>>>>> parent of 8d98aef (add images)
 
     // トランプのデッキを７組分使う
     const fullDeck = [];
