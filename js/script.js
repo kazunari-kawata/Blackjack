@@ -173,8 +173,7 @@ function calculateHandValue(hand) {
 
     for (const card of hand) {
         total += card.value;
-        if (card.number === 1)
-        aceCount++;
+        if (card.number === 1) aceCount++;
     }
 
     while (aceCount > 0 && total + 10 <= 21) {
@@ -186,13 +185,20 @@ function calculateHandValue(hand) {
 }
 
 $("#hit-button").prop("disabled", true);
-$("#stay-button").prop("disabled", true);
-
+$("#stand-button").prop("disabled", true);
+$("#surrender-button").prop("disabled", true);
+$("#doubleDown-button").prop("disabled", true);
+$("#your1-num").css("display", "none");
 
 $("#start-button").on("click", function () {
-    // ヒットボタン⇨有効化、ステイボタン⇨⇨有効化、スタートボタン⇨無効化
+    // ヒットボタン⇨有効化、スタンドボタン⇨⇨有効化、スタートボタン⇨無効化
     $("#hit-button").prop("disabled", false);
-    $("#stay-button").prop("disabled", false);
+    $("#stand-button").prop("disabled", false);
+    $("#surrender-button").prop("disabled", false);
+    $("#doubleDown-button").prop("disabled", false);
+    $("#your1-num").show();
+
+    // スタートボタン無効化
     $("#start-button").css("display", "none");
 
     // トランプのデッキを７組分使う
@@ -214,8 +220,8 @@ $("#start-button").on("click", function () {
     const your_card2 = fullDeck[randomIndex3];
     fullDeck.splice(randomIndex3, 1); // 選ばれたカードをスタックから削除
 
-    $("#your-card1").html("<img src=" + your_card1.image + ">");
-    $("#your-card2").html("<img src=" + your_card2.image + ">");
+    $("#your1-card1").html("<img src=" + your_card1.image + ">");
+    $("#your1-card2").html("<img src=" + your_card2.image + ">");
     $("#enemy-card1").html("<img src=" + enemy_card1.image + ">");
 
     // カウントアップする機能
@@ -225,11 +231,14 @@ $("#start-button").on("click", function () {
     let enemy_total_value = calculateHandValue(enemy_hand);
 
     $("#enemy-num").html(enemy_total_value);
-    $("#your-num").html(your_total_value);
+    $("#your1-num").html(your_total_value);
 
     let hit_count = 0;
     // Hitアクション
     $("#hit-button").on("click", function (e) {
+        $("#surrender-button").css("display", "none");
+        $("#doubleDown-button").css("display", "none");
+
         if (your_total_value <= 21) {
             hit_count++;
             const randomIndex = Math.floor(Math.random() * fullDeck.length);
@@ -237,23 +246,24 @@ $("#start-button").on("click", function () {
             fullDeck.splice(randomIndex, 1); // 選ばれたカードをスタックから削除
 
             // 新しいカードを追加表示
-            $("#your-card" + (2 + hit_count)).html(
+            $("#your1-card" + (2 + hit_count)).html(
                 "<img src=" + your_new_card.image + ">"
             );
 
             your_hand.push(your_new_card);
             your_total_value = calculateHandValue(your_hand);
-            $("#your-num").html(your_total_value);
+            $("#your1-num").html(your_total_value);
             // 勝者判定
             if (your_total_value > 21) {
-                $("#winner").html("Busted. Dealer won");
+                $("#winner").html("あなたがバースト。ディーラーの勝ち");
                 $("#start-button").css("display", "none");
                 $(".reset")
                     .css("display", "block")
                     .css("background-color", "yellow");
-                // 勝者判定後は"hit"と"stay"ボタンを無効化
+                // 勝者判定後は"hit"と"stand"ボタンを無効化
                 $("#hit-button").prop("disabled", true);
-                $("#stay-button").prop("disabled", true);
+                $("#stand-button").prop("disabled", true);
+                $("#surrender-button").prop("disabled", true);
             }
         }
     });
@@ -263,8 +273,11 @@ $("#start-button").on("click", function () {
     });
 
     let enemy_card_count = 1;
-    // Stayアクション
-    $("#stay-button").on("click", function (e) {
+    // standアクション
+    $("#stand-button").on("click", function (e) {
+        $("#surrender-button").css("display", "none");
+        $("#doubleDown-button").css("display", "none");
+
         const randomIndex = Math.floor(Math.random() * fullDeck.length);
         enemy_total_value = calculateHandValue(enemy_hand);
 
@@ -296,17 +309,18 @@ $("#start-button").on("click", function () {
         }
         // 勝者判定
         if (enemy_total_value > 21) {
-            $("#winner").html("Dealer Busted. You won");
+            $("#winner").html("ディーラーがバースト。あなたの勝ち");
         } else if (enemy_total_value > your_total_value) {
-            $("#winner").html("Dealer won");
+            $("#winner").html("ディーラーの勝ち");
         } else if (enemy_total_value == your_total_value) {
-            $("#winner").html("Push（引き分け）");
+            $("#winner").html("引き分け");
         } else {
-            $("#winner").html("You won");
+            $("#winner").html("あなたの勝ち");
         }
-        // 勝者判定後は"hit"と"stay"ボタンを無効化
+        // 勝者判定後はボタンを無効化
         $("#hit-button").prop("disabled", true);
-        $("#stay-button").prop("disabled", true);
+        $("#stand-button").prop("disabled", true);
+
         // リセットボタン
         $("#start-button").css("display", "none");
         $(".reset").css("display", "block").css("background-color", "yellow");
@@ -314,4 +328,52 @@ $("#start-button").on("click", function () {
             location.reload();
         });
     });
+
+    // Surrenderアクション
+    $("#surrender-button").on("click", function () {
+        $("#winner").html("ディーラーがバースト。ディーラーの勝ち");
+
+        $("#hit-button").prop("disabled", true);
+        $("#stand-button").prop("disabled", true);
+        $("#surrender-button").prop("disabled", true);
+        // リセットボタン
+        $("#start-button").css("display", "none");
+        $(".reset").css("display", "block").css("background-color", "yellow");
+        $(".reset").on("click", function () {
+            location.reload();
+        });
+    });
+
+    // ダブルダウンはfalse
+    let doubled = false;
+
+    $("#doubleDown-button").on("click", function () {
+        // 2枚の時点でしか選べないように制限
+        if (your_hand.length !== 2 || doubled) return;
+
+        // 賭け金処理を追加したら追加
+        // bet *= 2;
+        doubled = true;
+
+        // 1枚だけカードを引く
+        const randomIndex = Math.floor(Math.random() * fullDeck.length);
+        const your_new_card = fullDeck.splice(randomIndex, 1)[0];
+
+        hit_count++;
+        $("#your1-card" + (2 + hit_count)).html(
+            `<img src="${your_new_card.image}">`
+        );
+        your_hand.push(your_new_card);
+        your_total_value = calculateHandValue(your_hand);
+        $("#your1-num").html(your_total_value);
+
+        // Hit/Double Downボタン無効化
+        $("#hit-button").prop("disabled", true);
+        $("#doubleDown-button").prop("disabled", true);
+
+        // 自動でStand実行（ディーラーターンへ）
+        $("#stand-button").trigger("click");
+    });
+
+    // splitアクション
 });
