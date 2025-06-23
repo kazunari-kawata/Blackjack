@@ -331,11 +331,12 @@ $("#start-button").on("click", function () {
 
     // Surrenderアクション
     $("#surrender-button").on("click", function () {
-        $("#winner").html("ディーラーがバースト。ディーラーの勝ち");
+        $("#winner").html("あなたがサレンダー。ディーラーの勝ち");
 
-        $("#hit-button").prop("disabled", true);
-        $("#stand-button").prop("disabled", true);
-        $("#surrender-button").prop("disabled", true);
+        $("#hit-button").css("display", "none");
+        $("#stand-button").css("display", "none");
+        $("#surrender-button").css("display", "none");
+        $("#doubleDown-button").css("display", "none");
         // リセットボタン
         $("#start-button").css("display", "none");
         $(".reset").css("display", "block").css("background-color", "yellow");
